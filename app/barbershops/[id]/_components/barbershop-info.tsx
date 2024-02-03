@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/app/_components/ui/button";
 import { Barbershop } from "@prisma/client";
 import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
