@@ -4,7 +4,7 @@ import { Button } from "@/app/_components/ui/button";
 import { Calendar } from "@/app/_components/ui/calendar";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/app/_components/ui/sheet";
-import { Barbershop, Service } from "@prisma/client";
+import { Barbershop, Booking, Service } from "@prisma/client";
 import { ptBR } from "date-fns/locale";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -13,6 +13,10 @@ import { generateDayTimeList } from "../_helpers/hours";
 import { format, setHours, setMinutes } from "date-fns";
 import { saveBooking } from "../_actions/save-booking";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner"
+import { useRouter } from "next/navigation";
+import { getDayBookings } from "../_actions/get-day-bookings";
+
 
 interface ServiceItemProps {
     barbershop: Barbershop;
@@ -21,10 +25,15 @@ interface ServiceItemProps {
 }
 
 const ServiceItem = ({service, barbershop, isAuthenticated}: ServiceItemProps) => {
+    const router = useRouter();
+
     const {data} = useSession();
     const [date, setDate] = useState<Date | undefined>(undefined);
     const [hour, setHour] = useState<string | undefined>();
     const [submitIsLoading, setsubmitIsLoading] = useState(false)
+    const [SheetIsOpen, setSheetIsOpen] = useState(false);
+    const [dayBookings, setDayBookings] = useState<Booking[]>([]);
+    
 
 
     const handleDateClick = (date: Date | undefined) => {
@@ -51,7 +60,6 @@ const ServiceItem = ({service, barbershop, isAuthenticated}: ServiceItemProps) =
             }
             const dateHour = Number(hour.split(':') [0])
             const dateMinutes = Number(hour.split(':') [1])
-
             const newDate = setMinutes(setHours(date, dateHour), dateMinutes);
 
             await saveBooking({
@@ -59,7 +67,18 @@ const ServiceItem = ({service, barbershop, isAuthenticated}: ServiceItemProps) =
                 barbershopId: barbershop.id,
                 date: newDate,
                 userId: (data.user as any).id,
-            })
+            });
+
+            setSheetIsOpen(false);
+            setHour(undefined);
+            setDate(undefined);
+
+
+            toast(`${service.name}: Reserva realizada com sucesso!`, {
+            description: format(newDate, "'Para' dd 'de' MMMM 'às' HH':'mm'.'", {locale: ptBR,}),
+            action: { label: "Visualizar", onClick: () => router.push("/bookings"),
+                },
+            });
         } catch (error) {
             console.error(error);
         } finally {
@@ -95,7 +114,7 @@ const ServiceItem = ({service, barbershop, isAuthenticated}: ServiceItemProps) =
                             }).format(Number(service.price))}
                             </p>
 
-                            <Sheet>
+                            <Sheet open={SheetIsOpen} onOpenChange={setSheetIsOpen}>
                                 <SheetTrigger asChild>
                                     <Button variant="secondary" onClick={handleBookingClick}>Agendar</Button>
                                 </SheetTrigger>
