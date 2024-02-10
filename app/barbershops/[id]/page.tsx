@@ -4,7 +4,7 @@ import { Barbershop } from "@prisma/client";
 import BarbershopInfo from "./[id]/_components/barbershop-info";
 import ServiceItem from "./[id]/_components/service-item";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/_lib/auth";
 
 
 interface BarbershopDetailsPageProps {
