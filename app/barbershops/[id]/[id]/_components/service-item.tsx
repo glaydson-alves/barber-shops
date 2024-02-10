@@ -10,7 +10,7 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { generateDayTimeList } from "../_helpers/hours";
-import { format, setHours, setMinutes } from "date-fns";
+import { addDays, format, setHours, setMinutes } from "date-fns";
 import { saveBooking } from "../_actions/save-booking";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner"
@@ -157,7 +157,7 @@ const ServiceItem = ({service, barbershop, isAuthenticated}: ServiceItemProps) =
                                     <div className="py-6">
                                         <Calendar mode="single" selected={date} onSelect={handleDateClick}                  
                                             locale={ptBR}
-                                            fromDate={new Date()}
+                                            fromDate={addDays(new Date(), 1)}
                                             styles={{
                                                 head_cell:{width:"100%", textTransform: "capitalize",},                                            
                                                 cell: {width: "100%",},
@@ -175,7 +175,7 @@ const ServiceItem = ({service, barbershop, isAuthenticated}: ServiceItemProps) =
                                                 <Button 
                                                     onClick={() => handleHourClick(time)}
                                                     variant={hour === time ? "default" : "outline"}
-                                                    className="rounded-full"
+                                                    className="rounded-full hover:bg-[#4A3923]"
                                                     key={time}
                                                 >
                                                 {time}
