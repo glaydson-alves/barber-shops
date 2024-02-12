@@ -7,6 +7,8 @@ import { db } from "../_lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../_lib/auth";
+import Image from "next/image";
+
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -37,37 +39,49 @@ export default async function Home() {
   return (
     <div>
       <Header />
+      
+      <div className="relative lg:flex lg:w-full lg:justify-between lg:px-32 lg:py-16">
+        <Image
+          className="hidden lg:block absolute inset-0"
+          src="/background1.png"
+          fill
+          style={{ objectFit: 'cover', opacity: 0.2 }}
+          alt="background"
+        />
+        <div className="lg:w-1/2 z-10">
+          <div className="px-5 pt-5 lg:w-1/2  lg:px-0">
+            <h2 className="text-xl font-bold">
+              {session?.user ? `Olá, ${session.user.name?.split(" ")[0]}!` : "Olá! Vamos agendar um corte hoje?"}
+            </h2>
+            <p className="capitalize text-sm">
+              {format(new Date(), "EEEE',' dd 'de' MMMM", {
+                locale: ptBR,
+              })}
+            </p>
+          </div>
 
-      <div className="px-5 pt-5">
-        <h2 className="text-xl font-bold">
-          {session?.user ? `Olá, ${session.user.name?.split(" ")[0]}!` : "Olá! Vamos agendar um corte hoje?"}
-        </h2>
-        <p className="capitalize text-sm">
-          {format(new Date(), "EEEE',' dd 'de' MMMM", {
-            locale: ptBR,
-          })}
-        </p>
+          <div className="px-5 mt-6 lg:px-0">
+            <Search />
+          </div>
+        </div>
+      
+
+        <div className="mt-6 z-10">
+          {confirmedBookings.length > 0 && (
+              <>
+                <h2 className="pl-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
+                <div className="px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                  {confirmedBookings.map((booking) => (
+                    <BookingItem key={booking.id} booking={booking} />
+                  ))}
+                </div>
+              </>
+            )}
+
+        </div>
       </div>
 
-      <div className="px-5 mt-6">
-        <Search />
-      </div>
-
-      <div className="mt-6">
-      {confirmedBookings.length > 0 && (
-          <>
-            <h2 className="pl-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
-            <div className="px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-              {confirmedBookings.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
-              ))}
-            </div>
-          </>
-        )}
-
-      </div>
-
-      <div className="mt-6">
+      <div className="mt-6  lg:px-32">
         <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Recomendados</h2>
 
         <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
@@ -79,7 +93,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="mt-6 mb-[4.5rem]">
+      <div className="mt-6 mb-[4.5rem]  lg:px-32">
         <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Populares</h2>
 
         <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">

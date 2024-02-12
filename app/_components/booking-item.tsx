@@ -98,7 +98,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
                     <BookingInfo booking={booking} />
 
-                    <SheetFooter className="flex-row gap-3 mt-6">
+                    <SheetFooter className="flex-row gap-3 mt-6 w-[67%] lg:w-full">
                         <SheetClose asChild>
                             <Button className="w-full" variant="secondary">Voltar</Button>
                         </SheetClose>
