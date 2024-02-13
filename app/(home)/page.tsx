@@ -8,6 +8,7 @@ import BarbershopItem from "./_components/barbershop-item";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../_lib/auth";
 import Image from "next/image";
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious, } from "../_components/ui/carousel";
 
 
 export default async function Home() {
@@ -70,11 +71,13 @@ export default async function Home() {
           {confirmedBookings.length > 0 && (
               <>
                 <h2 className="pl-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
-                <div className="px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-                  {confirmedBookings.map((booking) => (
-                    <BookingItem key={booking.id} booking={booking} />
-                  ))}
-                </div>
+                <Carousel className="px-5 lg:px-0">
+                  <CarouselContent className="px-5 flex gap-3 [&::-webkit-scrollbar]:hidden">
+                    {confirmedBookings.map((booking) => (
+                      <BookingItem key={booking.id} booking={booking} />
+                    ))}
+                  </CarouselContent>
+                </Carousel>
               </>
             )}
 
@@ -82,27 +85,36 @@ export default async function Home() {
       </div>
 
       <div className="mt-6  lg:px-32">
-        <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Recomendados</h2>
-
-        <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {barbershops.map((barbershop:any) => (
-            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-            </div>
-          ))}
-        </div>
+        <h2 className="px-5 lg:px-1 text-xs mb-3 uppercase text-gray-400 font-bold">Recomendados</h2>
+        
+        <Carousel className="px-5 lg:px-0">
+          <CarouselContent className="flex px-5 gap-4 [&::-webkit-scrollbar]:hidden">
+            {barbershops.map((barbershop:any) => (
+              <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
+                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+              </div>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden lg:flex"/>
+          <CarouselNext className="hidden lg:flex"/>
+        </Carousel>
+        
       </div>
 
       <div className="mt-6 mb-[4.5rem]  lg:px-32">
-        <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Populares</h2>
+        <h2 className="px-5 lg:px-1 text-xs mb-3 uppercase text-gray-400 font-bold">Populares</h2>
 
-        <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {recommendedBarbershops.map((barbershop:any) => (
-            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-            </div>
-          ))}
-        </div>
+        <Carousel className="px-5 lg:px-0">
+          <CarouselContent className="flex px-5 gap-4 [&::-webkit-scrollbar]:hidden">
+            {recommendedBarbershops.map((barbershop:any) => (
+              <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
+                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+              </div>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden lg:flex"/>
+          <CarouselNext className="hidden lg:flex"/>
+        </Carousel>
       </div>
 
     </div>
