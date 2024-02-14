@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import SideMenu from "./side-menu";
 import Link from "next/link";
+import NavMenu from "./nav-menu";
 
 const Header = () => {
     return ( 
@@ -18,7 +19,8 @@ const Header = () => {
 
                 <Sheet>
                     <SheetTrigger asChild>
-                        <Button variant="outline" size="icon">
+                        <Button variant="outline" size="icon"
+                        className="lg:hidden">
                             <MenuIcon size={18} />
                         </Button>
                     </SheetTrigger>
@@ -27,7 +29,10 @@ const Header = () => {
                         <SideMenu/>
                     </SheetContent>
 
-                </Sheet>      
+                </Sheet>
+                <div className="hidden lg:flex">
+                    <NavMenu/>
+                </div> 
                 
             </CardContent>
         </Card>
