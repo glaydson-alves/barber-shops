@@ -26,13 +26,13 @@ const NavMenu = () => {
                     <div className="flex gap-3 items-center">
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
-                                <Button variant="secondary" size="icon" className="w-full px-4 gap-2">
-                                    <div className="flex items-center gap-2 hover:text-gray-300">
-                                        <Avatar >
-                                            <AvatarImage className='w-8 h-8' src={data.user?.image ?? ""} />
+                                <Button variant="secondary" size="icon" className="w-full px-2 rounded-full">
+                                    <div className="flex items-center gap-2">
+                                        <Avatar className="flex items-center">
+                                            <AvatarImage className="w-8 h-8" src={data.user?.image ?? ""} />
                                         </Avatar>
 
-                                        <h2 className="font-bold">{data.user.name}</h2>
+                                        <h2 className="font-bold hover:text-gray-300">{data.user.name}</h2>
                                     </div>
                                 </Button>
                             </AlertDialogTrigger>
