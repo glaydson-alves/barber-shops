@@ -29,7 +29,7 @@ const NavMenu = () => {
                                 <Button variant="secondary" size="icon" className="w-full px-2 rounded-full">
                                     <div className="flex items-center gap-2">
                                         <Avatar className="flex items-center">
-                                            <AvatarImage className="w-8 h-8" src={data.user?.image ?? ""} />
+                                            <AvatarImage className="w-8 h-8 rounded-full" src={data.user?.image ?? ""} />
                                         </Avatar>
 
                                         <h2 className="font-bold hover:text-gray-300">{data.user.name}</h2>
@@ -55,7 +55,7 @@ const NavMenu = () => {
                     <div>
                         <Button
                             variant="default" size="icon"
-                            className="w-full justify-start gap-2 px-4 hover:bg-[#94764f]"
+                            className="w-full justify-start gap-2 px-4 hover:bg-[#94764f] rounded-full"
                             onClick={handleLoginClick}
                         >
                             <CircleUserIcon size={24}  />
