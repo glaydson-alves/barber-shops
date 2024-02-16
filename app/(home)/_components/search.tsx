@@ -52,9 +52,10 @@ const Search = ({ defaultValues }: SearchProps) => {
             )}
           />
 
-            <Button variant="default" type="submit" className="hover:bg-[#94764f]">
-                <SearchIcon size={18} />
-            </Button>
+          <Button variant="default" type="submit" className="hover:bg-[#94764f]">
+              <SearchIcon size={18} />
+          </Button>
+          
         </form>
       </Form>
     </div>

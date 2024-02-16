@@ -16,7 +16,6 @@ const Header = () => {
                 <Link href="/">
                     <Image src="/logo.png" alt="imagem logo barber shops" height={22} width={120}/>
                 </Link>
-
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button variant="outline" size="icon"
@@ -30,6 +29,7 @@ const Header = () => {
                     </SheetContent>
 
                 </Sheet>
+                
                 <div className="hidden lg:flex">
                     <NavMenu/>
                 </div> 

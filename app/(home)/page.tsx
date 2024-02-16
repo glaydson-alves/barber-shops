@@ -49,7 +49,7 @@ export default async function Home() {
           style={{ objectFit: 'cover', opacity: 0.2 }}
           alt="background"
         />
-        <div className="lg:w-1/2 z-10">
+        <div className="lg:w-1/3 z-10">
           <div className="px-5 pt-5 lg:w-1/2  lg:px-0">
             <h2 className="text-xl font-bold">
               {session?.user ? `Olá, ${session.user.name?.split(" ")[0]}!` : "Olá! Vamos agendar um corte hoje?"}
@@ -63,25 +63,40 @@ export default async function Home() {
 
           <div className="px-5 mt-6 lg:px-0">
             <Search />
+            <div className="mt-6 z-10">
+              {confirmedBookings.length > 0 && (
+                <>
+                  <h2 className="pl-1 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
+                  <Carousel className="px-0">
+                    <CarouselContent className="px-5 flex gap-3 [&::-webkit-scrollbar]:hidden">
+                      {confirmedBookings.map((booking) => (
+                        <BookingItem key={booking.id} booking={booking} />
+                      ))}
+                    </CarouselContent>
+                  </Carousel>
+                </>
+              )}              
+            </div>
           </div>
         </div>
       
 
-        <div className="mt-6 z-10">
-          {confirmedBookings.length > 0 && (
-              <>
-                <h2 className="pl-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
-                <Carousel className="px-5 lg:px-0">
-                  <CarouselContent className="px-5 flex gap-3 [&::-webkit-scrollbar]:hidden">
-                    {confirmedBookings.map((booking) => (
-                      <BookingItem key={booking.id} booking={booking} />
-                    ))}
-                  </CarouselContent>
-                </Carousel>
-              </>
-            )}
-
+        <div className="hidden lg:block mt-6 lg:w-1/2 z-10">
+          <h2 className="px-5 lg:px-1 text-xs mb-3 uppercase text-gray-400 font-bold">Mais Visitados</h2>
+        
+          <Carousel className="px-5 lg:px-0">
+            <CarouselContent className="flex px-5 gap-4 [&::-webkit-scrollbar]:hidden">
+              {barbershops.map((barbershop:any) => (
+                <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
+                  <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+                </div>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden lg:flex"/>
+            <CarouselNext className="hidden lg:flex"/>
+          </Carousel>
         </div>
+
       </div>
 
       <div className="mt-6  lg:px-32">
